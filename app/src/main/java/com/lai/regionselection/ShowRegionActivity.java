@@ -28,7 +28,6 @@ public class ShowRegionActivity extends Activity {
     private Spinner spinner_qu;//区
 
     private EditText et_detailAddress;//输入详细地址
-
     private Button btn_confirm;//确认按钮
     private int resultCode = 102;//返回码
 
@@ -41,10 +40,8 @@ public class ShowRegionActivity extends Activity {
     private ArrayAdapter<String> areaAdapter;//区县数据适配器
 
     private String[] allSpinList;//在spinner中选出来的地址，后面需要用空格隔开省市区
-
     private String address;//用来接收intent的参数
     private String allAddress;//用来接收intent参数
-
 
     private String provinceName;//省的名字
     private String areaName;//区的名字
@@ -83,7 +80,7 @@ public class ShowRegionActivity extends Activity {
         provinceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);//系统默认的
         for (int i = 0; i < allProv.length; i++) {
             //给spinner省赋值,设置默认值
-            if (address != null && !address.equals("") && allAddress != null && !allAddress.equals("")&& allSpinList.length > 0 && allSpinList[0].equals(allProv[i])) {
+            if (address != null && !address.equals("") && allAddress != null && !allAddress.equals("") && allSpinList.length > 0 && allSpinList[0].equals(allProv[i])) {
                 selectPosition = i;
             }
             provinceAdapter.add(allProv[i]);//添加每一个省
@@ -103,7 +100,6 @@ public class ShowRegionActivity extends Activity {
         spinner_qu.setAdapter(areaAdapter);
 
         setListener();//设置spinner的点击监听
-
     }
 
     //设置spinner的点击监听
@@ -115,7 +111,7 @@ public class ShowRegionActivity extends Activity {
                 provinceName = parent.getSelectedItem() + "";//获取点击列表spinner item的省名字
                 if (isFirstLoad) {
                     // 判断是否省市区都存在
-                    if (address != null && !address.equals("") && allAddress != null && !allAddress.equals("")&& allSpinList.length > 1 && allSpinList.length < 3) {
+                    if (address != null && !address.equals("") && allAddress != null && !allAddress.equals("") && allSpinList.length > 1 && allSpinList.length < 3) {
                         updateCityAndArea(provinceName, allSpinList[1], null);//更新市和区
                     } else if (address != null && !address.equals("") && allAddress != null && !allAddress.equals("") && allSpinList.length >= 3) {
                         //存在省市区
@@ -152,7 +148,6 @@ public class ShowRegionActivity extends Activity {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
         //区
         spinner_qu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -166,7 +161,6 @@ public class ShowRegionActivity extends Activity {
 
             }
         });
-
     }
 
     /**
@@ -189,7 +183,6 @@ public class ShowRegionActivity extends Activity {
             spinner_shi.setSelection(selectPosition);
             updateArea(city, area);//穿入的区去集合中匹配
         }
-
     }
 
     //根据当前的市，更新区的信息
@@ -239,7 +232,6 @@ public class ShowRegionActivity extends Activity {
                     JSONObject jsonCy = jsonCity.getJSONObject(c);//转jsonObject
                     String cityStr = jsonCy.getString("n");//取出所有的市
                     allCity[c] = cityStr;//封装市集合
-
                     JSONArray jsonArea = null;
                     try {
                         jsonArea = jsonCy.getJSONArray("a");//在从所有的市里面取出所有的区,转jsonArray
@@ -252,10 +244,7 @@ public class ShowRegionActivity extends Activity {
                         String areaStr = jsonAa.getString("s");//获取所有的区
                         allArea[a] = areaStr;//封装起来
                     }
-
                     areaMap.put(cityStr, allArea);//某个市取出所有的区集合
-
-
                 }
                 cityMap.put(provStr, allCity);//某个省取出所有的市,
             }
